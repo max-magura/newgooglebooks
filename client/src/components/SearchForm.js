@@ -5,7 +5,6 @@ import {Form, Button, Col, Row, Container} from "react-bootstrap";
 import API from "./../utils/API";
 
 
-
 export default class SearchForm extends Component {
 
   state = {
