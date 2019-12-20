@@ -3,7 +3,7 @@ import {Card, Button} from "react-bootstrap";
 
 function BookInfo(props) {
   return (
-
+    <React.Fragment>
     <Card style={{ width: '18rem' }}>
         <Card.Body>
           <Card.Img src={props.imageUrl} />
@@ -17,6 +17,9 @@ function BookInfo(props) {
           <Button variant="primary" onClick={props.onClick}>Save Book</Button>
         </Card.Body>
     </Card>
+      <br/> 
+    </React.Fragment>
+
   );
 }
 

@@ -19,32 +19,32 @@ export default class SearchForm extends Component {
 
   searchBooks = query => {
     GoogleAPI.search(query)
-      .then(res => this.setState({ books: res.data.items[0].volumeInfo}))
-      .catch(err => console.log(err))
-      console.log(this.state.books)
-
-      // const booksArray = this.state.books
-      // console.log(booksArray)
-  
-      // const booksArray = this.state.books
-      // console.log(booksArray)
-
-      // const mapCocktail = function (booksArray) {
-  
-      //   const searchBooksArray = booksArray.map(volumeInfo  =>
-      //       {
-      //         return{
-      //           title: volumeInfo.title
-      //             // glass: drink.strGlass,
-      //             // instructions: drink.strInstructions,
-      //         }
-      //       }
-      //   );
-      //   return searchBooksArray
-      // }
-
-      // this.setState({ books: searchBooksArray\))
-        
+      .then(res => {
+        if (res.data.item === "error") {
+          throw new Error(res.data.items);
+      }
+      else {
+          // store response in a array
+          let results = res.data.items
+          //map through the array
+          results = results.map(result => {
+            //store each book information in a new object
+            result = {
+              key: result.id,
+              id: result.id,
+              title: result.volumeInfo.title,
+              author: result.volumeInfo.authors,
+              publishedDate: result.volumeInfo.publishedDate,
+              description: result.volumeInfo.description,
+              imageUrl: result.volumeInfo.imageLinks.smallThumbnail,
+              link: result.volumeInfo.infoLink
+            }
+            return result;
+          })
+          this.setState({ books: results, error: "" })
+        }
+      })
+      .catch(err => console.log(err))        
   };
 
   // .then(res => console.log(res.data.items[1].volumeInfo ))
@@ -70,6 +70,7 @@ export default class SearchForm extends Component {
   handleSaveBook = () =>{
     // event.preventDefault();
     console.log("hey hey hey")
+    alert("working on this feature!")
 
     API.saveBook({
       title: this.state.books.title,
@@ -82,7 +83,7 @@ export default class SearchForm extends Component {
         .then((res) => {console.log(res.data);this.loadSavedBooks()})
         .catch(err => console.log(err));
 
-}
+  }
 
   render() {
     return(
@@ -110,22 +111,28 @@ export default class SearchForm extends Component {
         <br/>
         <br/>
 
-        {this.state.books.title ? (
+        {this.state.books.length ? (
+          <div>
+          {this.state.books.map(book =>
+            (
                 <BookInfo
-                  title={this.state.books.title}
-                  author={this.state.books.authors}
-                  publishedDate={this.state.books.publishedDate}
-                  description={this.state.books.description}
-                  imageUrl={this.state.books.imageLinks.smallThumbnail
-                  }
-                  link={this.state.books.infoLink}
+                  title={book.title}
+                  author={book.author}
+                  publishedDate={book.publishedDate}
+                  description={book.description}
+                  imageUrl={book.imageUrl}
+                  link={book.infoLink}
                   onClick={this.handleSaveBook}
-                  id={this.state.books.title}
+                  id={book.title}
+                  key={book.key}
                 />
+              )
+  
+              )}  </div>
               ) : (
                 <h3>No Results to Display</h3>
               )}
-        
+             
       </Col>
       </Row>
       </Container>
