@@ -1,0 +1,16 @@
+ const booksArray = this.state.books
+    console.log(booksArray)
+
+    //   const searchBooksArray = mapBooks.map(volumeInfo  =>
+    //               {
+    //                 return{
+    //                 title: volumeInfo.title
+    //                 // glass: drink.strGlass,
+    //                 // instructions: drink.strInstructions,
+    //                 }
+    //               }
+    //         );
+    // return searchBooksArray
+    //   }
+
+    // console.log(mapBooks)
