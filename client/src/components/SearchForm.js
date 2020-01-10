@@ -14,7 +14,7 @@ export default class SearchForm extends Component {
   };
 
   componentDidMount() {
-    console.log("Welcome to the thunderdome");
+    console.log("Welcome to the jungle");
   };
 
   searchBooks = query => {
