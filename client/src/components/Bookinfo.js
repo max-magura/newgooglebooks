@@ -6,7 +6,8 @@ export default class BookInfo extends Component {
 
   addBook = event => {
     event.preventDefault();
-    this.props.onClick(this.props.key)
+    console.log(this.props.id)
+    this.props.onClick(this.props.id)
   }
   
   render () {

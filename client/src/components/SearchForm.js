@@ -60,9 +60,9 @@ export default class SearchForm extends Component {
     this.searchBooks(this.state.search);
   };
 
-  handleSaveBook = key => {
-    console.log("hey I saved a book " + key)
-    let bookSave = this.state.books.filter(b => b.key === key)
+  handleSaveBook = id => {
+    console.log("hey I saved a book " + id)
+    let bookSave = this.state.books.filter(b => b.id === id)
     console.log(bookSave[0])
 
     API.saveBook({
