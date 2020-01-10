@@ -7,7 +7,7 @@ function Navtop (props) {
    
     <Navbar bg="dark" variant="dark">
       <Navbar.Brand onClick={props.showSearch}>Google Books App</Navbar.Brand>
-      <Nav className="mr-auto">
+      <Nav className="navLinks">
         <Nav.Link onClick={props.showSearch}>Search</Nav.Link>
         <Nav.Link onClick={props.showSaved}>Saved</Nav.Link>
       </Nav>

@@ -3,6 +3,7 @@ import GoogleAPI from "./../utils/GoogleAPI";
 import BookInfo from "./Bookinfo";
 import {Form, Button, Col, Row, Container} from "react-bootstrap";
 import API from "./../utils/API";
+import './style.css';
 
 
 export default class SearchForm extends Component {
@@ -14,7 +15,6 @@ export default class SearchForm extends Component {
 
   componentDidMount() {
     console.log("Welcome to the thunderdome");
-    // console.log(this.state.books)
   };
 
   searchBooks = query => {
@@ -47,9 +47,6 @@ export default class SearchForm extends Component {
       .catch(err => console.log(err))        
   };
 
-  // .then(res => console.log(res.data.items[1].volumeInfo ))
-  // .then(res => this.setState({ books: res.data.items[1].volumeInfo }))
-
   handleInputChange = event => {
     const value = event.target.value;
     const name = event.target.name;
@@ -63,24 +60,20 @@ export default class SearchForm extends Component {
     this.searchBooks(this.state.search);
   };
 
-  loadSavedBooks = () =>{
-    console.log("HEY I DID IT!!")
-  }
-
-  handleSaveBook = () =>{
-    // event.preventDefault();
-    console.log("hey hey hey")
-    alert("working on this feature!")
+  handleSaveBook = key => {
+    console.log("hey I saved a book " + key)
+    let bookSave = this.state.books.filter(b => b.key === key)
+    console.log(bookSave[0])
 
     API.saveBook({
-      title: this.state.books.title,
-      author: this.state.books.authors,
-      publishedDate: this.state.books.publishedDate,
-      description: this.state.books.description,
-      imageUrl: this.state.books.imageLinks.smallThumbnail,
-      link: this.state.books.infoLink
+      title: bookSave[0].title,
+      author: bookSave[0].author[0],
+      publishedDate: bookSave[0].publishedDate,
+      description: bookSave[0].description,
+      imageUrl: bookSave[0].imageUrl,
+      link: bookSave[0].infoLink
       })
-        .then((res) => {console.log(res.data);this.loadSavedBooks()})
+        .then((res) => {console.log(res.data)})
         .catch(err => console.log(err));
 
   }
@@ -103,14 +96,15 @@ export default class SearchForm extends Component {
             variant="primary" type="submit" 
             onClick={this.handleFormSubmit}
             value={this.state.search}
-            // handleInputChange={this.handleInputChange}
-            // handleFormSubmit={this.handleFormSubmit}
+            handleInputChange={this.handleInputChange}
+            handleFormSubmit={this.handleFormSubmit}
             >
         Submit
         </Button>
         <br/>
         <br/>
 
+        <div class="card-columns">
         {this.state.books.length ? (
           <div>
           {this.state.books.map(book =>
@@ -123,7 +117,7 @@ export default class SearchForm extends Component {
                   imageUrl={book.imageUrl}
                   link={book.infoLink}
                   onClick={this.handleSaveBook}
-                  id={book.title}
+                  id={book.key}
                   key={book.key}
                 />
               )
@@ -132,6 +126,7 @@ export default class SearchForm extends Component {
               ) : (
                 <h3>No Results to Display</h3>
               )}
+        </div>
              
       </Col>
       </Row>
